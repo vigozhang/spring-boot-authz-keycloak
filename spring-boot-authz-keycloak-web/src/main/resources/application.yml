@@ -1,0 +1,36 @@
+server:
+  port: 8081
+
+spring:
+  freemarker:
+    # 设置模板后缀名
+    suffix: .ftl
+    # 设置文档类型
+    content-type: text/html
+    # 设置页面编码格式
+    charset: UTF-8
+    # 设置页面缓存
+    cache: false
+    # 设置ftl文件路径
+    template-loader-path:
+      - classpath:/templates
+
+keycloak:
+  realm: demo
+  auth-server-url: http://127.0.0.1:8080/auth
+  resource: spring-boot-authz-keycloak-web
+  ssl-required: external
+  credentials:
+    secret: dede7fd6-2817-491c-b7e5-27f65bbb5fc7
+  use-resource-role-mappings: false
+  bearer-only: false
+  autodetect-bearer-only: false
+  security-constraints:
+    - authRoles:
+        - ROLE_USER
+      securityCollections:
+        - name: all
+          patterns:
+            - /*
+  policy-enforcer-config:
+    on-deny-redirect-to: /accessDenied
